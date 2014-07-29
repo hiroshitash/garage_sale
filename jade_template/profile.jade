@@ -1,0 +1,9 @@
+h1 Sample linkedin API project
+form(name="input", action="/", method="post")
+  if result
+    h2 Profile:
+    p= result.headline
+    p= result.firstName + ' ' + result.lastName
+    a= result.siteStandardProfileRequest.url
+
+

@@ -1,0 +1,11 @@
+h1 Type Python code
+form(name="input", action="/", method="post")
+  textarea(name="code", cols=50, rows=10)
+    =codeContent
+  input(type="submit", value="Submit")
+  if execResult
+    h2 Output:
+    p= execResult.out
+
+    h2 Error:
+    p= execResult.err
