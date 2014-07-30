@@ -180,8 +180,9 @@ exports.getListHTML = function(url, params, callback) {
         , hasPic = !!element.find('.itempx').text().trim().match('pic');
 
       if (offer == "") {
-    	  el_price = element.find('.price');
-    	  price = el_price[0].valueOf().replace(/&#x0024;/, '$');
+    	  var el_price = element.find('.price');
+    	  price = el_price.first().text();
+    	  price.replace(/&#x0024;/, '$');
       }
       
       item.postId = id;

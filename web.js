@@ -42,32 +42,16 @@ craigslist.getList(base_url + 'search/sfc/sss?hasPic=1', function(error, listing
 	listings.forEach(function(listing) {
 		//console.log("for each\n" + util.inspect(listing));
 		craigslist.getListing(base_url + listing.url, function(error, oneList) {
-			console.log("oneList" + oneList);
+			console.log("oneList" + util.inspect(oneList));
 		});
 	});
+
+	//listing.title;
+	//listing.description;
+	//listing.url;
+	//listing.cities;
 		
-	/*
-	// for each listing, you can fetch the details (from actual listing html page on craigslist)
-	craigslist.getListing(listings[0], function(error, listing) {
-		console.log("listing");
-		console.log(listing);
-			
-			//console.log(listing.publishedAt);
-			//console.log(listing.coverImage);
-			//console.log(listing.images);
-			//console.log(listing.coordinates);
-			//console.log(listing.dogsAllowed); 
-			//console.log(listing.catsAllowed);
-			
-			// .. see source
-	});
-	*/	
-		//listing.title;
-		//listing.description;
-		//listing.url;
-		//listing.cities;
-		
-		//console.log(listing);
+	//console.log(listing);
 });
 	
 
