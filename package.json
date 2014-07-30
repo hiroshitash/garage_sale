@@ -4,8 +4,12 @@
   "dependencies": {
     "express": "3.1.x",
     "jade": "0.35.0",
-    "craigslist": "0.1.4",
-    "yql" : "0.4.5"
+    "superagent" : "0.18.2",
+    "cheerio" : "0.17.0",
+    "moment" : "1.7.2",
+    "feedparser" : "0.10.13",
+    "underscore" : "1.4.4"
+    
   },
   "engines": {
     "node": "0.11.x",

@@ -1,4 +1,5 @@
-var craigslist = require('craigslist');
+//var craigslist = require('craigslist');
+var craigslist = require('./craigslist_api');
 var fs = require("fs");
 var jade = require('jade');
 var render_profile_html = jade.compile(fs.readFileSync('jade_template/profile.jade'));
@@ -32,19 +33,20 @@ new YQL.exec(query, function(response) {
 }, {"zip": 90066, "loc": "sfbay", "type": "sss"});
 */
 
-
+var base_url = 'http://sfbay.craigslist.org/';
 // this parses the HTML list, which doesn't include things like images and geo coordinates
 //craigslist.getList('http://sfbay.craigslist.org/sfc/sss', function(error, listings) {
-craigslist.getList('http://sfbay.craigslist.org/search/sfc/sss?hasPic=1', function(error, listings) {
+craigslist.getList(base_url + 'search/sfc/sss?hasPic=1', function(error, listings) {
 	console.log("loading page");
 	//console.log(listings);
-	//listings.forEach(function(listing) {
+	listings.forEach(function(listing) {
 		//console.log("for each\n" + util.inspect(listing));
-		//craigslist.getListing(listing, function(error, oneList) {
-		//	console.log("oneList");
-		//	console.log(oneList);
-	//	});
+		craigslist.getListing(base_url + listing.url, function(error, oneList) {
+			console.log("oneList" + oneList);
+		});
+	});
 		
+	/*
 	// for each listing, you can fetch the details (from actual listing html page on craigslist)
 	craigslist.getListing(listings[0], function(error, listing) {
 		console.log("listing");
@@ -58,26 +60,27 @@ craigslist.getList('http://sfbay.craigslist.org/search/sfc/sss?hasPic=1', functi
 			//console.log(listing.catsAllowed);
 			
 			// .. see source
-		});
-		
+	});
+	*/	
 		//listing.title;
 		//listing.description;
 		//listing.url;
 		//listing.cities;
 		
 		//console.log(listing);
-	});
+});
+	
 
 
 app.get('/', function (req, res) {
 	console.log('session ' + util.inspect(req.session));
 	console.log("request received: " + req);
-    });
+});
 
 
 // Launch app
 var port = process.env.PORT || 5000;
 app.listen(port, function() {
 	console.log("Listening on " + port);
-    });
+});
 
