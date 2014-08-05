@@ -213,15 +213,17 @@ exports.getListing = function(url, callback) {
 
   exports.get(url, function(response) {
     var $ = cheerio.load(response.text);
+    console.log("response.text: " + response.text)
 
     var date = $('.postinginfo time').attr('datetime')
 
     listing.publishedAt = new Date(date)
 
     function extractCoordinates() {    
-      var coordinates = $('#map')
-        , lat = coordinates.attr('data-latitude')
-        , lng = coordinates.attr('data-longitude');
+      var coordinates = $('#map');
+      //var coordinates = $('.map')
+        lat = coordinates.attr('data-latitude');
+        lng = coordinates.attr('data-longitude');
 
       if (lat && lng && parseFloat(lat) != 0) {
         listing.coordinates = {lat: lat, lng: lng};
@@ -229,12 +231,12 @@ exports.getListing = function(url, callback) {
     }
 
     function extractImages() {
-      var coverImage = $('#iwi').attr('src');
+      var coverImage = $('div.slide.first img').attr('src');
 
       if (coverImage) {
         var images = [];
 
-        $('.iw #thumbs a').each(function(i, node) {
+        $('div#thumbs a').each(function(i, node) {
           node = $(node);
 
           images.push({url: node.attr('href'), thumbUrl: node.find('img').attr('src')});
