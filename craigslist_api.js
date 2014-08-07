@@ -213,13 +213,14 @@ exports.getListing = function(url, callback) {
 
   exports.get(url, function(response) {
     var $ = cheerio.load(response.text);
-    console.log("response.text: " + response.text)
+    //console.log("response.text: " + response.text)
 
     var date = $('.postinginfo time').attr('datetime')
 
     listing.publishedAt = new Date(date)
 
-    function extractCoordinates() {    
+    function extractCoordinates() {  
+    	var coordinates = $('.userbody > script');
       var coordinates = $('#map');
       //var coordinates = $('.map')
         lat = coordinates.attr('data-latitude');
@@ -270,15 +271,20 @@ exports.getListing = function(url, callback) {
           listing.catsAllowed = true;
       });
     }
+    
+    function extractBodyText() {
+        listing.bodyText = $('#postingbody').text();
+    }
 
     var node = $('.userbody > script'), nextNode;
     while (node) {
       if (node.length && (nextNode = node.next()) && (nextNode != node)) {
         if (nextNode.hasClass('iw'))
           extractImages();
-        else if (nextNode[0] && nextNode[0].name == 'small')
+        else if (nextNode[0] && nextNode[0].name == 'div' && nextNode.hasClass('mapAndAttrs')) {
           extractMaps(nextNode);
-        else if (nextNode.hasClass('blurbs')) {
+          extractCoordinates(nextNode);
+        } else if (nextNode.hasClass('blurbs')) {
           extractBlurbs(nextNode);
         }
       } else {
@@ -291,12 +297,15 @@ exports.getListing = function(url, callback) {
 
     var text = $('.userbody').text().trim().replace(/\n{2}\n+/, '\n\n');
 
-    extractCoordinates();
+    //extractCoordinates();
+    extractBodyText();
 
     listing.text = text;
+    
 
     if (callback) callback(null, listing);
   });
 }
 
 exports.getList = exports.getListHTML;
+

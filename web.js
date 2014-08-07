@@ -42,7 +42,7 @@ craigslist.getList(base_url + 'search/sfc/sss?hasPic=1', function(error, listing
 	listings.forEach(function(listing) {
 		//console.log("for each\n" + util.inspect(listing));
 		craigslist.getListing(base_url + listing.url, function(error, oneList) {
-			console.log("oneList" + util.inspect(oneList));
+			//console.log("oneList" + util.inspect(oneList));
 		});
 	});
 
